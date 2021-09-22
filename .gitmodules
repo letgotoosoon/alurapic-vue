@@ -1,3 +1,3 @@
 [submodule "api"]
 	path = api
-	url = git@github.com:letgotoosoon/alurapic-vue.git
+	url = https://github.com/letgotoosoon/alurapic-vue-api
