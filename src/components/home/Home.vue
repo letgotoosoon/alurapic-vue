@@ -1,7 +1,5 @@
 <template>
   <div>
-    <img src="/static/beagle.png">
-
     <h1 class="centralizado">{{ titulo }}</h1>
 
 <p class="centralizado">{{ mensagem }}</p>

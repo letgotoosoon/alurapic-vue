@@ -7,26 +7,11 @@ import './directives/Transform';
 import VeeValidate from 'vee-validate';
 import msg from './pt_BR';
 import 'bootstrap/dist/css/bootstrap.css';
-import './assets/js/teste.js';
 import 'bootstrap/dist/js/bootstrap.js';
 
 
 Vue.use(VueResource);
-Vue.http.options.root = process.env.API_URL ? process.env.API_URL : 'http://localhost:3000';
-
-Vue.http.interceptors.push((req, next) => {
-  req.headers.set('Authorization', 'informação de segurança aqui');
-  console.log('Lidando com o request');
-
-  next(res => {
-    console.log('Lidando com a resposta');
-    console.log(res.body);
-  });
-});
-
-
-
-
+Vue.http.options.root = 'http://localhost:3000';
 
 Vue.use(VueRouter)
 
