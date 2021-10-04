@@ -1,6 +1,7 @@
 # Alurapic
 
 > A Vue.js project
+
 > Project Status: in progress :warning:
 
 ## Build Setup

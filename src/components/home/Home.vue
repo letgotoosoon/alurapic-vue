@@ -1,22 +1,29 @@
 <template>
   <div>
+    <img src="/static/beagle.png">
 
     <h1 class="centralizado">{{ titulo }}</h1>
 
+<p class="centralizado">{{ mensagem }}</p>
     <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="filtre pelo título da foto"/>
 
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="foto of fotosComFiltro" v-bind:key="foto">
         <meu-painel :titulo="foto.titulo">
 
-          <imagem-responsiva :url="foto.url" :titulo="foto.titulo"/>
+          <imagem-responsiva v-meu-transform:scale.animate="1.2" :url="foto.url" :titulo="foto.titulo"/>
+          <router-link :to="{ name: 'altera', params: { id : foto._id }}" >
+            <meu-botao
+            tipo="button"
+            rotulo="ALTERAR"/>
+          </router-link>
+
           <meu-botao
             tipo="button"
             rotulo="REMOVER"
             @botaoAtivado="remove(foto)"
             :confirmacao="true"
             estilo="perigo"/>
-
         </meu-painel>
       </li>
     </ul>
@@ -26,10 +33,11 @@
 
 <script>
 
-import ImagemResponsiva from '../shared/imagem-responsiva/imagemResponsiva.vue';
+import ImagemResponsiva from '../shared/imagem-responsiva/imagemResponsiva';
 import Painel from '../shared/painel/Painel.vue';
 import Botao from '../shared/botao/Botao.vue';
-
+import Transform from '../../directives/Transform';
+import FotoService from '../../domain/foto/FotoService';
 
 export default {
 
@@ -43,10 +51,9 @@ export default {
   data () {
     return {
       titulo: 'Alurapic',
-
       fotos: [],
-
-      filtro: ''
+      filtro: '',
+      mensagem: ''
     }
   },
 
@@ -63,18 +70,28 @@ export default {
 
   methods: {
     remove(foto) {
-      alert('Remover a foto ' + foto.titulo);
+      this.service.apaga(foto._id)
+        .then(() => {
+          let indice = this.fotos.indexOf(foto);
+          this.fotos.splice(indice, 1);
+          this.mensagem = 'Foto removida com sucesso';
+        }, err => this.mensagem = err.message
+        );
     }
   },
 
-  created() {
+  directives: {
+    'meu-transform': Transform
+  },
 
-    this.$http
-      .get('http://localhost:3000/v1/fotos')
-      .then(res => res.json())
-      .then(fotos => this.fotos = fotos);
+  created() {
+    this.service = new FotoService(this.$resource);
+    this.service
+      .lista()
+      .then(fotos => this.fotos = fotos, err => this.mensagem = err.message);
   }
 }
+
 </script>
 <style>
 
