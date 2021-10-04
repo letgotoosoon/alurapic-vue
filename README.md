@@ -1,9 +1,6 @@
 # Alurapic
 
 > A Vue.js project
-
-> Project Status: in progress :warning:
-
 ## Build Setup
 
 ``` bash
@@ -26,6 +23,18 @@ npm run build
 npm install
 
 # serve with hot reload at localhost:3000
+npm start
+```
+
+## Run Server
+
+> Clone Server repository at https://github.com/letgotoosoon/alurapic-server
+
+``` bash
+# install dependencies
+npm install
+
+# server will start at port 8080
 npm start
 ```
 
